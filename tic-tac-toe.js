@@ -8,12 +8,14 @@ function pressed(element)
       {
         element.classList.add("X");
         element.textContent = "X";
+        element.classList.remove("hover");
         turn++;
       }
       else
       {
         element.classList.add("O");
         element.textContent = "O";
+        element.classList.remove("hover");
         turn++;
       }
     }
@@ -29,5 +31,17 @@ window.onload = function() {
         children.addEventListener('click', function(e){
             pressed(e.currentTarget);
         });
+
+        children.addEventListener('mouseover', function(e){
+        if(e.currentTarget.classList.contains("X") == false && e.currentTarget.classList.contains("O") == false){
+            e.currentTarget.classList.toggle("hover");
+        }
+    });
+
+    children.addEventListener('mouseout', function(e){
+        if(e.currentTarget.classList.contains("X") == false && e.currentTarget.classList.contains("O") == false){
+            e.currentTarget.classList.toggle("hover");
+        }
+    });
     }
 }
