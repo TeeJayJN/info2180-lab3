@@ -49,49 +49,67 @@ function checkWin(squares){
     return null;
 }
 
-window.onload = function() {
+if (typeof window !== 'undefined') {
+    window.onload = function() {
 
-    const status = document.getElementById('status');
-    const board = document.getElementById('board');
-    const squares = board.children;
-    
-    for (let children of squares)
-    {
-        children.classList.add("square");
-
-        children.addEventListener('click', function(e){
-            if (checkWin(squares) == null && turn < 9) {
-                pressed(e.currentTarget);
-            }
-
-            if (checkWin(squares) == 'X') {
-                status.classList.add("you-won");
-                status.innerHTML = "<p>Congratulations! X is the Winner!</p>";
-            }
-
-            else if (checkWin(squares) == 'O') {
-                    status.classList.add("you-won");
-                    status.innerHTML = "<p>Congratulations! O is the Winner!</p>";
-            }
-
-            else if (turn == 9 && checkWin(squares) == null) {
-                status.innerHTML = "<p>Game is a Draw!</p>";
-            }
-        });
-
-        children.addEventListener('mouseover', function(e){
-            if(turn < 9 && checkWin(squares) == null){
-                if(e.currentTarget.classList.contains("X") == false && e.currentTarget.classList.contains("O") == false){
-                    e.currentTarget.classList.toggle("hover");
-                }
-            }
-        });
+        const status = document.getElementById('status');
+        const board = document.getElementById('board');
+        const button = document.getElementsByClassName('btn')[0];
+        const squares = board.children;
         
-        children.addEventListener('mouseout', function(e){
-            if(turn < 9 && checkWin(squares) == null){
-                if(e.currentTarget.classList.contains("X") == false && e.currentTarget.classList.contains("O") == false){
-                    e.currentTarget.classList.toggle("hover");
+        for (let children of squares)
+        {
+            children.classList.add("square");
+
+            children.addEventListener('click', function(e){
+                if (checkWin(squares) == null && turn < 9) {
+                    pressed(e.currentTarget);
                 }
+
+                if (checkWin(squares) == 'X') {
+                    status.classList.add("you-won");
+                    status.innerHTML = "<p>Congratulations! X is the Winner!</p>";
+                }
+
+                else if (checkWin(squares) == 'O') {
+                        status.classList.add("you-won");
+                        status.innerHTML = "<p>Congratulations! O is the Winner!</p>";
+                }
+
+                else if (turn == 9 && checkWin(squares) == null) {
+                    status.innerHTML = "<p>Game is a Draw!</p>";
+                }
+            });
+
+            children.addEventListener('mouseover', function(e){
+                if(turn < 9 && checkWin(squares) == null){
+                    if(e.currentTarget.classList.contains("X") == false && e.currentTarget.classList.contains("O") == false){
+                        e.currentTarget.classList.toggle("hover");
+                    }
+                }
+            });
+            
+            children.addEventListener('mouseout', function(e){
+                if(turn < 9 && checkWin(squares) == null){
+                    if(e.currentTarget.classList.contains("X") == false && e.currentTarget.classList.contains("O") == false){
+                        e.currentTarget.classList.toggle("hover");
+                    }
+                }
+            });
+        }
+
+        button.addEventListener('click', function(e) {
+            for (let children of squares)
+            {
+                turn = 0;
+
+                children.classList.remove("X");
+                children.classList.remove("O");
+                children.classList.remove("hover");
+                children.textContent = "";
+
+                status.classList.remove("you-won");
+                status.textContent = "Move your mouse over a square and click to play an X or an O.";
             }
         });
     }
